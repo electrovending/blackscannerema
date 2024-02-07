@@ -19,8 +19,8 @@ const analyzeCoins = async () => {
   const coins = coinsData.result.list.filter(coin => coin.status === 'Trading').map(coin => coin.symbol);
 
   const results = await Promise.all(coins.map(coin => fetchKline(coin)));
-  const positiveDF = results.filter(({ EMA_dist }) => EMA_dist > 0).sort((a, b) => b.EMA_dist - a.EMA_dist).slice(0, 10);
-  const negativeDF = results.filter(({ EMA_dist }) => EMA_dist < 0).sort((a, b) => a.EMA_dist - b.EMA_dist).slice(0, 10);
+  const positiveDF = results.filter(({ EMA_dist }) => EMA_dist > 1.5).sort((a, b) => b.EMA_dist - a.EMA_dist).slice(0, 10);
+  const negativeDF = results.filter(({ EMA_dist }) => EMA_dist < 1.5).sort((a, b) => a.EMA_dist - b.EMA_dist).slice(0, 10);
 
   populateTable('positiveTable', positiveDF);
   populateTable('negativeTable', negativeDF);
